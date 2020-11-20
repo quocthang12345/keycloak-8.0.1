@@ -1,0 +1,1 @@
+INDEX VERSION 1.131+/home/quocthang123/Downloads/keycloak-8.0.1/.metadata/.plugins/org.eclipse.jdt.core
