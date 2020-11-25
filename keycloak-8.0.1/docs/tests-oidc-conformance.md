@@ -1,18 +1,17 @@
 Executing OIDC Conformance Testsuite
 ====================================
 
-Run and configure Keycloak on Openshift
+Chạy và định cấu hình Keycloak trên Openshift 
 ---------------------------------------
-First step is to run Keycloak server in the environment, where it is available online, so the OIDC conformance testsuite can connect to it.
+Bước đầu tiên là chạy Keycloak server trong môi trường, nơi nó có sẵn trực tuyến, vì thế các OIDC Conformance Testsuite testsuite có thể kết nối với nó. 
 
-1) Take a look at https://github.com/keycloak/openshift-keycloak-cartridge for how to run Keycloak on Openshift. Follow the instructions until you have 
-openshift instance with Keycloak 2.3.0.CR1 or later available on some URL like https://keycloak-mposolda.rhcloud.com/auth .
+1) Hãy nhìn vào https://github.com/keycloak/openshift-keycloak-cartridge vì cách chạy Keycloak trên Openshift. Theo hướng dẫn cho đến khi bạn có phiên bản Openshift với keycloak 2.3.0.CR1 hoặc sau đó có sẵn trên một số URL như  https://keycloak-mposolda.rhcloud.com/auth .
  
  
-2) Admin user needs to be manually created on command line on Openshift cartridge. Then cartridge needs to be restarted. See Keycloak docs for details.
+2) Người dùng quản trị cần được tạo thủ công trên dòng lệnh trên hộp mực Openshift. Vậy thì cần phải khởi động lại. Xem tài liệu Keycloak để biết chi tiết. 
 
 
-3) To successfully run OP-Rotation-RP-Sig test, it is good if you re-configure default minTimeBetweenRequests for publicKeyStorage. In $KEYCLOAK_HOME/standalone/configuration/standalone.xml do those changes:
+3) Để chạy thành công thử nghiệm OP-Rotation-RP-Sig, nó sẽ tốt nếu bạn định cấu hình lại minTimeBetweenRequests mặc định cho publicKeyStorage. Trong $KEYCLOAK_HOME/standalone/configuration/standalone.xml thực hiện những thay đổi đó: 
 ```
 <spi name="publicKeyStorage">
     <provider name="infinispan" enabled="true">
@@ -22,38 +21,37 @@ openshift instance with Keycloak 2.3.0.CR1 or later available on some URL like h
     </provider>
 </spi>
 ```            
-and then restart server.
+và sau đó chạy server.
             
-Reason: Keycloak supports rotation and dynamically downloading client's keys from configured jwks_url. However by default there is 10 seconds timeout 
-between 2 requests for download public keys to avoid DoS attacks. 
-The OIDC test OP-Rotation-RP-Sig registers client, then login user for the 1st time (which downloads new client keys) and 
-then immediatelly rotates client keys and expects refreshToken request to succeed with new key. This is just the testing scenario. 
-In real production environment, clients will very unlikely do something like this. Hence just for testing purposes is DoS protection disabled by set -1 here.
+Lý do: Keycloak hỗ trợ quay và tải các khóa của khách hàng xuống từ jwks_url đã định cấu hình. Tuy nhiên, theo mặc định có 10 giây 
+Giữa 2 yêu cầu tải xuống các khóa công khai để tránh các cuộc tấn công của DoS. 
+Máy kiểm tra OIDC  OP-Rotation-RP-Sig đăng ký khách hàng, sau đó người dùng đăng nhập cho lần truy cập lần đầu (Tải xuống các khóa khách hàng mới) và 
+Sau đó immediatelly xoay các phím client và dự kiến yêu cầu refreshToken thành công với khóa mới. Đây chỉ là kịch bản thử nghiệm thôi. 
+Trong môi trường sản xuất thực tế, các khách hàng sẽ không thể làm điều gì như thế này. Do đó chỉ vì mục đích thử nghiệm là sự bảo vệ DoS bị tắt do tập 1 tại đây. 
  
                                                                                                                
-4) Login to admin console and create some user with basic claims filled (email, first name, last name). 
-It's suggested that his username or email will have your domain attached to it (eg. "john@keycloak-mposolda.rhcloud.com" ), so that in OP-Req-login_hint test, you will be able to login as the "hinted" user.
+4) Đăng nhập vào bảng điều khiển dành cho quản trị viên và tạo một số người dùng với các xác nhận quyền sở hữu cơ bản đã được điền đầy đủ(email, first name, last name). 
+Chúng tôi đề xuất rằng tên người dùng hoặc email của ông sẽ được gắn với tên miền của bạn.("john@keycloak-mposolda.rhcloud.com"), vì thế trong bài kiểm tra OP-Req-login_hint, bạn sẽ có thể đăng nhập như người dùng "hinted". 
 
 
-5) Allow anonymous dynamic client registration from the OIDC host. In admin console go to "Client registration" -> "Client registration policies" -> "Trusted hosts" and add new trusted host:
+5) Cho phép đăng ký khách hàng động vô danh từ máy chủ OIDC. Trong bảng điều khiển quản trị sẽ truy cập "Client registration" - > "Client registration policies" - > "Trusted hosts" và thêm máy chủ lưu trữ tin cậy mới: 
  ```
  op.certification.openid.net
  ```
 
-click "+" , then "Save".
+Nhấn "+" , rồi "Save".
 
-This is needed because by default the anonymous dynamic client registration is not allowed from any host, so is effectively disabled. 
-
-Note that OIDC conformance testsuite registers new client for each test. So you can maybe also remove "Consent required" policy if you don't want to see consent screen during almost every test.
-You can maybe also increase limit by Max Clients policy (it is 200 by default, so likely should be sufficient).
+Điều này cần thiết bởi vì theo mặc định, việc đăng ký khách hàng động vô danh không được phép từ bất kỳ máy chủ nào, do đó cũng được vô hiệu hóa hiệu quả. 
+Lưu ý rằng các thanh ghi có tính chất thực tế phù hợp với máy khách mới cho mỗi thử nghiệm. Vì vậy, bạn có thể xóa chính sách "Consent required" nếu không muốn xem màn hình đồng ý trong hầu hết mọi thử nghiệm. 
+Bạn cũng có thể tăng giới hạn bởi chính sách của các khách hàng (mặc định là 200 , vì vậy có khả năng sẽ là sufficient). 
 
 
 Run conformance testsuite
 -------------------------
 
-Full instructions on http://openid.net/certification/testing/ . 
+Hướng dẫn đầy đủ về  http://openid.net/certification/testing/ . 
 
-So what I did was:
+Điều tôi đã làm là 
 
 1) Go to https://op.certification.openid.net:60000/
 
@@ -81,23 +79,22 @@ A: JWT signed with algorithm other than "none"
 Q: Test specific request parameters:
 Login Hint: john (this means that OP-Req-login_hint test will use user like "john@keycloak-mposolda.rhcloud.com" as it automatically attaches domain name to it for some reason).
 
-Nothing else filled
+Không còn gì khác 
  
 
-4) After setup, you will be redirected to the testing application. Something like `https://op.certification.openid.net:60720/` and can run individual tests.
-Some tests require some manual actions (eg. delete cookies). The conformance testsuite should guide you.
+4) Sau khi thiết lập, bạn sẽ được chuyển hướng đến ứng dụng thử nghiệm. Kiểu như  `https://op.certification.openid.net:60720/` Và có thể kiểm tra cá nhân. 
+Một số kiểm tra yêu cầu một số thao tác thủ công (eg. delete cookies).Những người thực tế cần phải hướng dẫn bạn. 
 
 
-
-Update the openshift cartridge with latest Keycloak
+Cập nhật hộp mực openshift với Keycloak mới nhất 
 ---------------------------------------------------
 
-Once some issue is fixed on Keycloak side, you may want to doublecheck if test on OIDC conformance side is passing. Hence you may want to test with JARs from latest
-Keycloak master instead of the "official release" Keycloak JARs from cartridge.
+Một khi một số vấn đề được khắc phục ở phía keycloak, bạn có thể muốn doublecheck nếu OIDC về mặt phù hợp. Vì vậy, bạn có thể muốn thử nghiệm với JARs từ gần nhất 
+Keycloak master thay vì "official release" Keycloak JARs từ cartridge.
  
-Openshift allows to connect with SSH and restart the cartridge. So you may use something like this on your laptop (example with the fix in module keycloak-services ). 
+Openshift cho phép kết nối ssh và khởi động lại hộp mực. Nên bạn có thể dùng cái này trên laptop của bạn  (Ví dụ với sự khắc phục trong module keycloak-services). 
 
-On your laptop
+ở laptop của bạn
 ````bash
 cd $KEYCLOAK_SOURCES
 cd services
@@ -106,11 +103,11 @@ scp target/keycloak-server-spi-2.1.0-SNAPSHOT.jar 51122e382d5271c5ca0000bc@keycl
 ssh 51122e382d5271c5ca0000bc@keycloak-mposolda.rhcloud.com
 ````
 
-Then on the machine:
+Rồi trên máy: 
 
-1) update the version in `/var/lib/openshift/51122e382d5271c5ca0000bc/wildfly/modules/system/add-ons/keycloak/org/keycloak/keycloak-server-spi/main/modules.xml`
+1) Cập nhật version trong `/var/lib/openshift/51122e382d5271c5ca0000bc/wildfly/modules/system/add-ons/keycloak/org/keycloak/keycloak-server-spi/main/modules.xml`
  
-2) Replace JAR and restart server:
+2) Thay thế JAR và khởi động lại server:
 
 ````bash
 cp /tmp/keycloak-server-spi-2.1.0-SNAPSHOT.jar /var/lib/openshift/51122e382d5271c5ca0000bc/wildfly/modules/system/add-ons/keycloak/org/keycloak/keycloak-server-spi/main/
@@ -120,6 +117,5 @@ cd /var/lib/openshift/51122e382d5271c5ca0000bc/wildfly/bin
 ./standalone.sh -b 127.3.168.129 -bmanagement=127.3.168.129 -Dh2.bindAddress=127.3.168.129
 ````
 
-Wait for the server to start. Then rerun the OIDC test with the updated cartridge.
-
-Another possibility is to test with pure Wildfly Openshift cartridge and always install the latest keycloak-overlay to it.
+Chờ máy chủ bắt đầu. Sau đó chạy lại bài kiểm tra OIDC với cartridge đã cập nhật. 
+Một khả năng khác là thử nghiệm với Wildfly Openshift cartridge và luôn cài đặt các lớp phủ keycloak mới nhất. 

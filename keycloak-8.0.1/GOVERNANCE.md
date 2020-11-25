@@ -81,7 +81,7 @@ Một nhà duy trì sẽ chịu trách nhiệm cho việc phê duyệt yêu cầ
 Yêu cầu hoặc ủy quyền cho chuyên gia trong lĩnh vực tương ứng. 
 Nếu thay đổi này có tác động lớn hơn nó phải tuân theo quy trình cho những thay đổi lớn hơn. 
 
-### Larger Changes
+### Thay đổi lớn
 
 Đối với những thay đổi lớn hơn tất cả những người đóng góp và người đóng góp nên có cơ hội xem xét thay đổi. Chuyện này xong rồi 
 Gửi email đến [developer mailing list](https://lists.jboss.org/mailman/listinfo/keycloak-dev) để bắt đầu một vụ thảo luận xung quanh thay đổi. 

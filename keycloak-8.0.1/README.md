@@ -1,8 +1,7 @@
 # Keycloak
 
-Keycloak is an Open Source Identity and Access Management solution for modern Applications and Services.
-
-This repository contains the source code for the Keycloak Server, Java adapters and the JavaScript adapter.
+Keycloak là một dạng mã nguồn mở và giải pháp quản lý truy cập cho các ứng dụng hiện đại và dịch vụ. 
+Kho này chứa mã nguồn cho máy chủ Keycloak, Java adapter và Javascript adapter. 
 
 
 ## Help and Documentation
@@ -12,48 +11,48 @@ This repository contains the source code for the Keycloak Server, Java adapters 
 * [JIRA](https://issues.jboss.org/projects/KEYCLOAK) - Issue tracker for bugs and feature requests
 
 
-## Reporting Security Vulnerabilities
+## Báo cáo về lỗ hổng an ninh 
 
-If you've found a security vulnerability, please look at the [instructions on how to properly report it](http://www.keycloak.org/security.html)
+Nếu bạn tìm thấy lỗ hỏng bảo mật trong hệ thống, vui lòng truy cập vào [instructions on how to properly report it](http://www.keycloak.org/security.html)
 
 
 ## Reporting an issue
 
-If you believe you have discovered a defect in Keycloak please open an issue in our [Issue Tracker](https://issues.jboss.org/projects/KEYCLOAK).
-Please remember to provide a good summary, description as well as steps to reproduce the issue.
+Nếu bạn tin rằng bạn đã khám phá ra một khiếm khuyết trong keycloak, hãy mở một vấn đề trong các vấn đề [Issue Tracker](https://issues.jboss.org/projects/KEYCLOAK). 
+Hãy nhớ cung cấp bản tóm tắt tốt, mô tả cũng như các bước để tái tạo sự cố. 
 
 
 ## Getting started
 
-To run Keycloak download the distribution from our [website](https://www.keycloak.org/downloads.html). Unzip and run:
+Để chạy keycloak tải tệp xuống từ  [website](https://www.keycloak.org/downloads.html). Giải nén và chạy dòng lệnh:
 
     bin/standalone.[sh|bat] 
 
-Alternatively, you can use the Docker image by running:
+Ngoài ra, bạn có thể sử dụng Docker bằng cách chạy:
 
     docker run jboss/keycloak
     
-For more details refer to the [Keycloak Documentation](https://www.keycloak.org/documentation.html).
+Để biết thêm chi tiết tham khảo  [Keycloak Documentation](https://www.keycloak.org/documentation.html).
 
 
 ## Building from Source
 
-To build from source refer to the [building and working with the code base](docs/building.md) guide.
+Để build từ source hãy truy cập vào [building and working with the code base](docs/building.md) guide.
 
 
 ### Testing
 
-To run tests refer to the [running tests](docs/tests.md) guide.
+Để kiểm thử hãy truy cập vào [running tests](docs/tests.md) guide.
 
 
 ### Writing Tests
 
-To write tests refer to the [writing tests](docs/tests-development.md) guide.
+Để write tests hãy truy cập vào [writing tests](docs/tests-development.md) guide.
 
 
 ## Contributing
 
-Before contributing to Keycloak please read our [contributing guidelines](CONTRIBUTING.md).
+Trước khi đóng góp cho keycloak hãy đọc [contributing guidelines](CONTRIBUTING.md)
 
 
 ## Other Keycloak Projects
