@@ -3,7 +3,7 @@ package org.keycloak.social.apple;
 import org.keycloak.broker.oidc.OIDCIdentityProviderConfig;
 import org.keycloak.models.IdentityProviderModel;
 
-class AppleIdentityProviderConfig extends OIDCIdentityProviderConfig {
+public class AppleIdentityProviderConfig extends OIDCIdentityProviderConfig {
 
     AppleIdentityProviderConfig(IdentityProviderModel identityProviderModel) {
         super(identityProviderModel);
@@ -16,5 +16,4 @@ class AppleIdentityProviderConfig extends OIDCIdentityProviderConfig {
     public String getTeamId() {
         return getConfig().get("teamId");
     }
- 
 }

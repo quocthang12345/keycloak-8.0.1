@@ -1,11 +1,19 @@
 package org.keycloak.social.apple;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.util.Base64;
+
+import org.jboss.logging.Logger;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.broker.oidc.AbstractOAuth2IdentityProvider;
-import org.keycloak.broker.oidc.OIDCIdentityProvider;
-import org.keycloak.broker.oidc.OIDCIdentityProviderConfig;
+import org.keycloak.broker.oidc.OAuth2IdentityProviderConfig;
+import org.keycloak.broker.oidc.mappers.AbstractJsonUserAttributeMapper;
 import org.keycloak.broker.provider.BrokeredIdentityContext;
+import org.keycloak.broker.provider.IdentityBrokerException;
 import org.keycloak.broker.provider.util.SimpleHttp;
 import org.keycloak.broker.social.SocialIdentityProvider;
 import org.keycloak.common.util.Time;
@@ -16,118 +24,145 @@ import org.keycloak.crypto.SignatureSignerContext;
 import org.keycloak.events.EventBuilder;
 import org.keycloak.jose.jws.JWSBuilder;
 import org.keycloak.models.KeycloakSession;
-import org.keycloak.models.RealmModel;
 import org.keycloak.representations.JsonWebToken;
-import org.keycloak.util.JsonSerialization;
+import org.keycloak.vault.VaultStringSecret;
 
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.core.Response;
-import java.io.IOException;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.Base64;
+import com.fasterxml.jackson.databind.JsonNode;
 
-public class AppleIdentityProvider extends OIDCIdentityProvider implements SocialIdentityProvider<OIDCIdentityProviderConfig> {
-     private String userJson;
+public class AppleIdentityProvider extends AbstractOAuth2IdentityProvider implements SocialIdentityProvider {
 
-    public AppleIdentityProvider(KeycloakSession session, AppleIdentityProviderConfig config) {
-        super(session, config);
-        config.setAuthorizationUrl("https://appleid.apple.com/auth/authorize?response_mode=form_post");
-        config.setTokenUrl("https://appleid.apple.com/auth/token");
-    }
+	public static final String AUTH_URL = "https://appleid.apple.com/auth/authorize";
+	public static final String TOKEN_URL = "https://appleid.apple.com/auth/token";
+	public static final String PROFILE_URL = "https://appleid.apple.com";
+	public static final String DEFAULT_SCOPE = "name email";
+	
+	public AppleIdentityProvider(KeycloakSession session, OAuth2IdentityProviderConfig config) {
+		super(session, config);
+		config.setAuthorizationUrl(AUTH_URL);
+		config.setTokenUrl(TOKEN_URL);
+		config.setUserInfoUrl(PROFILE_URL);
+	}
+	
+	
 
-    @Override
-    public Object callback(RealmModel realm, AuthenticationCallback callback, EventBuilder event) {
-        return new OIDCEndpoint(callback, realm, event);
-    }
+	protected BrokeredIdentityContext doGetFederatedIdentity(String accessToken) {
+		try {
+			JsonNode profile = SimpleHttp.doGet(PROFILE_URL, session).header("Authorization", "Bearer " + accessToken).asJson();
 
-    @Override
-    public BrokeredIdentityContext getFederatedIdentity(String response) {
-        BrokeredIdentityContext context = super.getFederatedIdentity(response);
+			return extractIdentityFromProfile(null, profile);
+		} catch (Exception e) {
+			throw new IdentityBrokerException("Could not obtain user profile from apple.", e);
+		}
+	}
+	
+	@Override
+	public SimpleHttp authenticateTokenRequest(final SimpleHttp tokenRequest) {
+	        if (getConfig().isJWTAuthentication()) {
+	            String jws = new JWSBuilder().type(OAuth2Constants.JWT).jsonContent(generateToken()).sign(getSignatureContext());
+	            logger.debug("Info create request");
+	            return tokenRequest
+	                    .param(OAuth2Constants.CLIENT_ASSERTION_TYPE, OAuth2Constants.CLIENT_ASSERTION_TYPE_JWT)
+	                    .param(OAuth2Constants.CLIENT_ASSERTION, jws);
+	        } else {
+	            try (VaultStringSecret vaultStringSecret = session.vault().getStringSecret(GenerateClientSecret())) {
+	                if (getConfig().isBasicAuthentication()) {
+	                    return tokenRequest.authBasic(getConfig().getClientId(), vaultStringSecret.get().orElse(GenerateClientSecret()));
+	                }
+	                logger.debug("Info create request");
+	                return tokenRequest
+	                        .param(OAUTH2_PARAMETER_CLIENT_ID, getConfig().getClientId())
+	                        .param(OAUTH2_PARAMETER_CLIENT_SECRET, GenerateClientSecret());
+	            }
+	        }
+	    }
+	
+	public String GenerateClientSecret() {
+		 AppleIdentityProviderConfig config = (AppleIdentityProviderConfig) getConfig();
+	     String base64PrivateKey = config.getClientSecret();
+	     String clientSecret = "";
 
-        if (userJson != null) {
-            try {
-                User user = JsonSerialization.readValue(userJson, User.class);
-                context.setEmail(user.email);
-                context.setFirstName(user.name.firstName);
-                context.setLastName(user.name.lastName);
-            } catch (IOException e) {
-                logger.errorf("Failed to parse userJson [%s]: %s", userJson, e);
+	        try {
+	            KeyFactory keyFactory = KeyFactory.getInstance("EC");
+	            byte[] pkc8ePrivateKey = Base64.getDecoder().decode(base64PrivateKey);
+	            PKCS8EncodedKeySpec keySpecPKCS8 = new PKCS8EncodedKeySpec(pkc8ePrivateKey);
+	            PrivateKey privateKey = keyFactory.generatePrivate(keySpecPKCS8);
+
+	            KeyWrapper keyWrapper = new KeyWrapper();
+	            keyWrapper.setAlgorithm(Algorithm.ES256);
+	            keyWrapper.setKid(config.getKeyId());
+	            keyWrapper.setPrivateKey(privateKey);
+	            SignatureSignerContext signer = new ServerECDSASignatureSignerContext(keyWrapper);
+
+	            long currentTime = Time.currentTime();
+	            JsonWebToken token = new JsonWebToken();
+	            token.issuer(config.getTeamId());
+	            token.issuedAt((int) currentTime);
+	            token.expiration((int) currentTime + 15 * 60);
+	            token.audience("https://appleid.apple.com");
+	            token.subject(config.getClientId());
+	            clientSecret = new JWSBuilder().jsonContent(token).sign(signer);
+	        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+	            logger.error("Failed to generate client secret: %s", e);
+	        }
+	        return clientSecret;
+	}
+
+
+	@Override
+	protected boolean supportsExternalExchange() {
+		return true;
+	}
+	@Override
+	protected String getProfileEndpointForValidation(EventBuilder event) {
+		return PROFILE_URL;
+	}
+
+ 
+	
+
+	@Override
+	protected BrokeredIdentityContext extractIdentityFromProfile(EventBuilder event, JsonNode profile) {
+		String id = getJsonProperty(profile, "id");
+
+		BrokeredIdentityContext user = new BrokeredIdentityContext(id);
+
+		String email = getJsonProperty(profile, "email");
+
+		user.setEmail(email);
+
+		String username = getJsonProperty(profile, "username");
+
+		if (username == null) {
+            if (email != null) {
+                username = email;
+            } else {
+                username = id;
             }
         }
 
-        return context;
-    }
+		user.setUsername(username);
 
-    @Override
-    public SimpleHttp authenticateTokenRequest(SimpleHttp tokenRequest) {
-        AppleIdentityProviderConfig config = (AppleIdentityProviderConfig) getConfig();
-        tokenRequest.param(OAUTH2_PARAMETER_CLIENT_ID, config.getClientId());
-        String base64PrivateKey = config.getClientSecret();
+		String firstName = getJsonProperty(profile, "first_name");
+		String lastName = getJsonProperty(profile, "last_name");
 
-        try {
-            KeyFactory keyFactory = KeyFactory.getInstance("EC");
-            byte[] pkc8ePrivateKey = Base64.getDecoder().decode(base64PrivateKey);
-            PKCS8EncodedKeySpec keySpecPKCS8 = new PKCS8EncodedKeySpec(pkc8ePrivateKey);
-            PrivateKey privateKey = keyFactory.generatePrivate(keySpecPKCS8);
-
-            KeyWrapper keyWrapper = new KeyWrapper();
-            keyWrapper.setAlgorithm(Algorithm.ES256);
-            keyWrapper.setKid(config.getKeyId());
-            keyWrapper.setPrivateKey(privateKey);
-            SignatureSignerContext signer = new ServerECDSASignatureSignerContext(keyWrapper);
-
-            long currentTime = Time.currentTime();
-            JsonWebToken token = new JsonWebToken();
-            token.issuer(config.getTeamId());
-            token.issuedAt((int) currentTime);
-            token.expiration((int) (currentTime + 15 * 60));
-            token.audience("https://appleid.apple.com");
-            token.subject(config.getClientId());
-            String clientSecret = new JWSBuilder().jsonContent(token).sign(signer);
-
-            tokenRequest.param(OAUTH2_PARAMETER_CLIENT_SECRET, clientSecret);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            logger.errorf("Failed to generate client secret: %s", e);
+		if (lastName == null) {
+            lastName = "";
+        } else {
+            lastName = " " + lastName;
         }
 
-        return tokenRequest;
-    }
+		user.setName(firstName + lastName);
+		user.setIdpConfig(getConfig());
+		user.setIdp(this);
 
-    @Override
-    protected String getDefaultScopes() {
-        return "email name";
-    }
+		AbstractJsonUserAttributeMapper.storeUserProfileForMapper(user, profile, getConfig().getAlias());
 
-    protected class OIDCEndpoint extends OIDCIdentityProvider.OIDCEndpoint {
-        public OIDCEndpoint(AuthenticationCallback callback, RealmModel realm, EventBuilder event) {
-            super(callback, realm, event);
-        }
+		return user;
+	}
 
-        @POST
-        public Response authResponse(
-                @FormParam(AbstractOAuth2IdentityProvider.OAUTH2_PARAMETER_STATE) String state,
-                @FormParam(AbstractOAuth2IdentityProvider.OAUTH2_PARAMETER_CODE) String authorizationCode,
-                @FormParam("user") String userJson,
-                @FormParam(OAuth2Constants.ERROR) String error) {
-            AppleIdentityProvider.this.userJson = userJson;
-            return super.authResponse(state, authorizationCode, error);
-        }
-    }
+	@Override
+	protected String getDefaultScopes() {
+		return DEFAULT_SCOPE;
+	}
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    private static class User {
-        public String email;
-        public Name name;
-
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        private static class Name {
-            public String firstName;
-            public String lastName;
-        }
-    }
 }

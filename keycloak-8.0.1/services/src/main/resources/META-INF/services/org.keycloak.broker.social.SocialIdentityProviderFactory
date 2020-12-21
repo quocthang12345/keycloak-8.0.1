@@ -15,6 +15,7 @@
 # limitations under the License.
 #
 
+org.keycloak.social.apple.AppleIdentityProviderFactory
 org.keycloak.social.facebook.FacebookIdentityProviderFactory
 org.keycloak.social.paypal.PayPalIdentityProviderFactory
 org.keycloak.social.github.GitHubIdentityProviderFactory
