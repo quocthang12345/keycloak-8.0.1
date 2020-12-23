@@ -30,7 +30,8 @@ import org.keycloak.vault.VaultStringSecret;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class AppleIdentityProvider extends AbstractOAuth2IdentityProvider implements SocialIdentityProvider {
-
+	
+	protected static final Logger logger = Logger.getLogger(AppleIdentityProvider.class);
 	public static final String AUTH_URL = "https://appleid.apple.com/auth/authorize";
 	public static final String TOKEN_URL = "https://appleid.apple.com/auth/token";
 	public static final String PROFILE_URL = "https://appleid.apple.com";
@@ -47,8 +48,8 @@ public class AppleIdentityProvider extends AbstractOAuth2IdentityProvider implem
 
 	protected BrokeredIdentityContext doGetFederatedIdentity(String accessToken) {
 		try {
+			
 			JsonNode profile = SimpleHttp.doGet(PROFILE_URL, session).header("Authorization", "Bearer " + accessToken).asJson();
-
 			return extractIdentityFromProfile(null, profile);
 		} catch (Exception e) {
 			throw new IdentityBrokerException("Could not obtain user profile from apple.", e);
@@ -59,7 +60,6 @@ public class AppleIdentityProvider extends AbstractOAuth2IdentityProvider implem
 	public SimpleHttp authenticateTokenRequest(final SimpleHttp tokenRequest) {
 	        if (getConfig().isJWTAuthentication()) {
 	            String jws = new JWSBuilder().type(OAuth2Constants.JWT).jsonContent(generateToken()).sign(getSignatureContext());
-	            logger.debug("Info create request");
 	            return tokenRequest
 	                    .param(OAuth2Constants.CLIENT_ASSERTION_TYPE, OAuth2Constants.CLIENT_ASSERTION_TYPE_JWT)
 	                    .param(OAuth2Constants.CLIENT_ASSERTION, jws);
@@ -68,7 +68,6 @@ public class AppleIdentityProvider extends AbstractOAuth2IdentityProvider implem
 	                if (getConfig().isBasicAuthentication()) {
 	                    return tokenRequest.authBasic(getConfig().getClientId(), vaultStringSecret.get().orElse(GenerateClientSecret()));
 	                }
-	                logger.debug("Info create request");
 	                return tokenRequest
 	                        .param(OAUTH2_PARAMETER_CLIENT_ID, getConfig().getClientId())
 	                        .param(OAUTH2_PARAMETER_CLIENT_SECRET, GenerateClientSecret());
@@ -80,7 +79,6 @@ public class AppleIdentityProvider extends AbstractOAuth2IdentityProvider implem
 		 AppleIdentityProviderConfig config = (AppleIdentityProviderConfig) getConfig();
 	     String base64PrivateKey = config.getClientSecret();
 	     String clientSecret = "";
-
 	        try {
 	            KeyFactory keyFactory = KeyFactory.getInstance("EC");
 	            byte[] pkc8ePrivateKey = Base64.getDecoder().decode(base64PrivateKey);
@@ -110,10 +108,12 @@ public class AppleIdentityProvider extends AbstractOAuth2IdentityProvider implem
 
 	@Override
 	protected boolean supportsExternalExchange() {
+		logger.info("example2");
 		return true;
 	}
 	@Override
 	protected String getProfileEndpointForValidation(EventBuilder event) {
+		logger.info("example1");
 		return PROFILE_URL;
 	}
 
@@ -122,6 +122,7 @@ public class AppleIdentityProvider extends AbstractOAuth2IdentityProvider implem
 
 	@Override
 	protected BrokeredIdentityContext extractIdentityFromProfile(EventBuilder event, JsonNode profile) {
+		logger.info("example");
 		String id = getJsonProperty(profile, "id");
 
 		BrokeredIdentityContext user = new BrokeredIdentityContext(id);

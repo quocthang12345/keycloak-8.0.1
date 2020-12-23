@@ -138,6 +138,7 @@ public abstract class AbstractOAuth2IdentityProvider<C extends OAuth2IdentityPro
     }
 
     protected String extractTokenFromResponse(String response, String tokenName) {
+    	logger.info("extract");
         if(response == null)
             return null;
 
@@ -289,6 +290,7 @@ public abstract class AbstractOAuth2IdentityProvider<C extends OAuth2IdentityPro
 
 
     public BrokeredIdentityContext getFederatedIdentity(String response) {
+    	logger.info("federatedIdentify");
         String accessToken = extractTokenFromResponse(response, getAccessTokenResponseParameter());
 
         if (accessToken == null) {
@@ -406,6 +408,8 @@ public abstract class AbstractOAuth2IdentityProvider<C extends OAuth2IdentityPro
             }
         }
     }
+    
+
 
     protected JsonWebToken generateToken() {
         JsonWebToken jwt = new JsonWebToken();

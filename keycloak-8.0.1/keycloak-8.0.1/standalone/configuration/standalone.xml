@@ -149,9 +149,8 @@
 		       <password>quocthang123</password>
 		   </security>
        	</datasource>
-
-		<drivers>
-	             <driver name="postgresql" module="org.postgresql">
+                <drivers>
+                    <driver name="postgresql" module="org.postgresql">
 		      	 <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
 		     </driver>
                     <driver name="h2" module="com.h2database.h2">

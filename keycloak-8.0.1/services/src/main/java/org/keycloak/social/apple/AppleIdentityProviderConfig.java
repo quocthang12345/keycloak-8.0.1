@@ -1,11 +1,16 @@
 package org.keycloak.social.apple;
 
-import org.keycloak.broker.oidc.OIDCIdentityProviderConfig;
+import org.keycloak.broker.oidc.OAuth2IdentityProviderConfig;
 import org.keycloak.models.IdentityProviderModel;
 
-public class AppleIdentityProviderConfig extends OIDCIdentityProviderConfig {
+public class AppleIdentityProviderConfig extends OAuth2IdentityProviderConfig {
 
-    AppleIdentityProviderConfig(IdentityProviderModel identityProviderModel) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6632978055868863780L;
+
+	AppleIdentityProviderConfig(IdentityProviderModel identityProviderModel) {
         super(identityProviderModel);
     }
 

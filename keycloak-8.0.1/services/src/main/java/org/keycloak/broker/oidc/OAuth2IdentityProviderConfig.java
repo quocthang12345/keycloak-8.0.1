@@ -23,7 +23,8 @@ import org.keycloak.protocol.oidc.OIDCLoginProtocol;
  * @author Pedro Igor
  */
 public class OAuth2IdentityProviderConfig extends IdentityProviderModel {
-
+	
+	
     public OAuth2IdentityProviderConfig(IdentityProviderModel model) {
         super(model);
     }

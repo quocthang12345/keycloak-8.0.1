@@ -1,2 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="org.apache.xml.security.algorithms.Algorithm"/>
+    <fullyQualifiedTypeName name="org.keycloak.OAuth2Constants"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="org.keycloak.jose.jws.JWSBuilder"/>
+    <fullyQualifiedTypeName name="org.springframework.context.annotation.Configuration"/>
+    <fullyQualifiedTypeName name="org.springframework.transaction.annotation.EnableTransactionManagement"/>
+    <fullyQualifiedTypeName name="org.springframework.orm.jpa.JpaTransactionManager"/>
+    <fullyQualifiedTypeName name="javax.persistence.EntityManagerFactory"/>
+    <fullyQualifiedTypeName name="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"/>
+    <fullyQualifiedTypeName name="org.springframework.orm.jpa.JpaVendorAdapter"/>
+    <fullyQualifiedTypeName name="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+    <fullyQualifiedTypeName name="org.springframework.context.annotation.Bean"/>
+    <fullyQualifiedTypeName name="javax.sql.DataSource"/>
+    <fullyQualifiedTypeName name="org.springframework.jdbc.datasource.DriverManagerDataSource"/>
+    <fullyQualifiedTypeName name="java.util.Properties"/>
+    <fullyQualifiedTypeName name="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+    <fullyQualifiedTypeName name="java.lang.Override"/>
+    <fullyQualifiedTypeName name="javax.persistence.Table"/>
+    <fullyQualifiedTypeName name="javax.persistence.Entity"/>
+    <fullyQualifiedTypeName name="javax.persistence.Column"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
+    <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.JpaRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.config.EnableJpaRepositories"/>
+    <fullyQualifiedTypeName name="org.keycloak.social.jpa.AppleProviderModel"/>
+    <fullyQualifiedTypeName name="java.security.KeyFactory"/>
+    <fullyQualifiedTypeName name="java.util.Base64"/>
+    <fullyQualifiedTypeName name="java.security.spec.PKCS8EncodedKeySpec"/>
+    <fullyQualifiedTypeName name="org.keycloak.crypto.KeyWrapper"/>
+    <fullyQualifiedTypeName name="org.keycloak.crypto.Algorithm"/>
+    <fullyQualifiedTypeName name="org.keycloak.crypto.SignatureSignerContext"/>
+    <fullyQualifiedTypeName name="org.keycloak.crypto.ServerECDSASignatureSignerContext"/>
+    <fullyQualifiedTypeName name="org.keycloak.representations.JsonWebToken"/>
+    <fullyQualifiedTypeName name="java.sql.Time"/>
+    <fullyQualifiedTypeName name="org.keycloak.common.util.Time"/>
+    <fullyQualifiedTypeName name="java.security.NoSuchAlgorithmException"/>
+    <fullyQualifiedTypeName name="java.security.spec.InvalidKeySpecException"/>
+    <fullyQualifiedTypeName name="java.security.PrivateKey"/>
+    <fullyQualifiedTypeName name="org.jboss.logging.Logger"/>
+    <fullyQualifiedTypeName name="org.keycloak.broker.oidc.OAuth2IdentityProviderConfig"/>
+</qualifiedTypeNameHistroy>
