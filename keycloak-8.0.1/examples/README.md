@@ -1,73 +1,73 @@
 Keycloak Examples
 =================
 
-Thư mục này chứa một số ví dụ cho Keycloak. 
+This directory contains a number of examples for Keycloak.
 
 Demo
 ----
 
-Đây là ví dụ chính của chúng tôi, cho thấy đăng nhập, Single-Sign On, Single-Sign Out và OAuth Token Grant.. Bản demo xuất hiện trong hai flavours:  
+This is the our main example, which shows Login, Single-Sign On, Single-Sign Out and OAuth Token Grant. The demo comes in two flavours: 
 
-* Preconfigured - sử dụng hương vị này để nhanh chóng triển khai bản demo cho một máy chủ Keycloak địa phương mà không cần phải định cấu hình bất cứ thứ gì khác ngoài việc nhập các cài đặt realm 
-* Unconfigured - sử dụng vị trí này để định cấu hình theo cách thủ công và triển khai demo cho một máy chủ Keycloak địa phương hoặc bên ngoài 
+* Preconfigured - Use this flavour to quickly deploy the demo to a local Keycloak server without having to configure anything other than importing the realm settings into Keycloak
+* Unconfigured - Use this flavour to manually configure and deploy the demo to either a local or external Keycloak server
 
-Để biết thêm thông tin, hãy xem `preconfigured-demo/README.md` hoặc `unconfigured-demo/README.md`.Đối với unconfigured-demo có một màn hình kèm theo  [http://keycloak.org/docs](http://keycloak.org/docs) Đi bộ qua quá trình thiết lập. 
+For more information look at `preconfigured-demo/README.md` or `unconfigured-demo/README.md`. For the unconfigured-demo there's an accompanying screencast at [http://keycloak.org/docs](http://keycloak.org/docs) that walks you through the setup process.
 
 
 Admin Client
 ------------
 
-Ví dụ sử dụng ứng dụng quản trị viên. Để biết thêm thông tin  `admin-client/README.md`.
+Example using the Admin Client. For more information look at `admin-client/README.md`.
 
 
 Cordova
 -------
 
-Ví dụ ứng dụng Cordova. Để biết thêm thông tin  `cordova/README.md`.
+Example Cordova application. For more information look at `cordova/README.md`.
 
 
 CORS
 ----
 
-Ví dụ ứng dụng CORS. Để biết thêm thông tin `cors/README.md`.
+Example CORS application. For more information look at `cors/README.md`.
 
 
 JS Console
 ----------
 
-Ví dụ ứng dụng javascript hãy để ví dụ cho phép bạn thử nghiệm với bộ điều hợp javascript. Để biết thêm thông tin  `js-console/README.md`.
+Example JavaScript application that let's you experiment with the JavaScript adapter. For more information look at `js-console/README.md`.
 
 
 Providers
 ---------
 
-Các nhà cung cấp mẫu cho người nghe sự kiện SPI, cửa hàng sự kiện và liên kết của người dùng SPI. Để biết thêm thông tin:
+Example providers for Event Listener SPI, Event Store SPI and User Federation SPI. For more information look at:
 
-* User Federation tải người dùng từ một tệp văn bản - `providers/federation-provider/README.md`
+* User Federation that loads users from a text file - `providers/federation-provider/README.md`
 
 
 Themes
 ------
 
-Ví dụ các chủ đề mẫu để thay đổi hình thức và cảm nhận của biểu mẫu đăng nhập, bảng điều khiển quản lý tài khoản và bảng điều khiển dành cho quản trị viên. Để biết thêm thông tin `themes/README.md`.
+Example themes to change the look and feel of login forms, account management console and admin console. For more information look at `themes/README.md`.
 
 
 Multi tenancy
 -------------
 
-Một ứng dụng hoàn chỉnh, cho thấy cách đạt được đa số các ứng dụng web bằng cách sử dụng một vương quốc mỗi tài khoản. Để biết thêm thông tin  `multi-tenant/README.md`
+A complete application, showing how to achieve multi tenancy of web applications by using one realm per account. For more information look at `multi-tenant/README.md`
 
 Basic authentication
 --------------------
 
-Ví dụ về ứng dụng nghỉ ngơi được định cấu hình để hỗ trợ cả xác thực cơ bản với username/password cũng như xác thực với mã không mang. Để biết thêm thông tin  `basic-auth/README.md`  
+Example REST application configured to support both basic authentication with username/password as well as authentication with bearer token. For more information look at `basic-auth/README.md`  
 
 Fuse
 ----
 
-Đây là các ứng dụng demo, hiển thị cách bảo vệ các ứng dụng web của riêng bạn chạy bên trong môi trường OSGI trong cầu chì JBoss Fuse hoặc Apache Karaf. Để biết thêm thông tin `fuse/README.md`   
+This is set of demo applications, showing how to secure your own web applications running inside OSGI environment in JBoss Fuse or Apache Karaf. Fore more information look at `fuse/README.md`   
 
 SAML
 ----
 
-Đây là các ứng dụng demo, hiển thị cách bảo vệ các ứng dụng SAML web của chính bạn. Để biết thêm thông tin  `saml/README.md`   
+This is set of demo applications, showing how to secure your own SAML web applications. Fore more information look at `saml/README.md`   

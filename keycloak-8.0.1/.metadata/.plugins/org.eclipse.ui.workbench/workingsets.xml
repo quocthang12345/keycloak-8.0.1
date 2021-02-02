@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workingSetManager>
-<workingSet editPageId="org.eclipse.jdt.internal.ui.DynamicSourcesWorkingSet" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1606731202505_0" label="Java Main Sources" name="Java Main Sources"/>
-<workingSet editPageId="org.eclipse.jdt.internal.ui.DynamicSourcesWorkingSet" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1606731202524_1" label="Java Test Sources" name="Java Test Sources"/>
-<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1606731271042_3" label="keycloak-parent" name="keycloak-parent">
+<workingSet editPageId="org.eclipse.jdt.internal.ui.DynamicSourcesWorkingSet" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1608881870028_0" label="Java Main Sources" name="Java Main Sources"/>
+<workingSet editPageId="org.eclipse.jdt.internal.ui.DynamicSourcesWorkingSet" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1608881870052_1" label="Java Test Sources" name="Java Test Sources"/>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1608881890051_3" label="keycloak-parent" name="keycloak-parent">
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/boms" type="4"/>
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/keycloak-adapter-bom" type="4"/>
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/keycloak-spi-bom" type="4"/>
@@ -261,5 +261,5 @@
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/keycloak-quarkus-extensions" type="4"/>
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/keycloak-quarkus-server" type="4"/>
 </workingSet>
-<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1606731205299_2" label="Window Working Set" name="Aggregate for window 1606731205299"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1608881872751_2" label="Window Working Set" name="Aggregate for window 1608881872750"/>
 </workingSetManager>

@@ -19,34 +19,34 @@
             </div>
         </fieldset>
         <fieldset>
-            <div class="form-group clearfix">
-                <label class="col-md-2 control-label" for="clientId"><span class="required">*</span> {{:: 'client-id' | translate}}</label>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="clientId"><span class="required">*</span> {{:: 'apple.client-id' | translate}}</label>
                 <div class="col-md-6">
                     <input class="form-control" id="clientId" type="text" ng-model="identityProvider.config.clientId" required>
                 </div>
-                <kc-tooltip>{{:: 'social.client-id.tooltip' | translate}}</kc-tooltip>
+                <kc-tooltip>{{:: 'apple.client-id-tooltip' | translate}}</kc-tooltip>
             </div>
-            <div class="form-group clearfix">
-                <label class="col-md-2 control-label" for="clientSecret"><span class="required">*</span> {{:: 'apple.client-secret' | translate}}</label>
+            <div class="form-group">
+            <label class="col-md-2 control-label" for="clientSecret"><span class="required">*</span> {{:: 'apple.client-secret' | translate}}</label>
                 <div class="col-md-6">
                     <input class="form-control" id="clientSecret" kc-password ng-model="identityProvider.config.clientSecret" required>
                 </div>
                 <kc-tooltip>{{:: 'apple.client-secret-tooltip' | translate}}</kc-tooltip>
             </div>
             <div class="form-group">
-			    <label class="col-md-2 control-label" for="keyId"><span class="required">*</span> {{:: 'apple.keyId' | translate}}</label>
-			    <div class="col-md-6">
-			        <input ng-model="identityProvider.config.keyId" id="keyId" class="form-control" />
-			    </div>
-			    <kc-tooltip>{{:: 'apple.keyIdToolTip' | translate}}</kc-tooltip>
-			</div>
-			<div class="form-group">
-			    <label class="col-md-2 control-label" for="teamId"><span class="required">*</span> {{:: 'apple.teamId' | translate}}</label>
-			    <div class="col-md-6">
-			        <input ng-model="identityProvider.config.teamId" id="teamId" class="form-control" />
-			    </div>
-			    <kc-tooltip>{{:: 'apple.teamIdToolTip' | translate}}</kc-tooltip>
-			</div>
+		<label class="col-md-2 control-label" for="keyId"><span class="required">*</span> {{:: 'apple.keyId' | translate}}</label>
+	        <div class="col-md-6">
+	             <input ng-model="identityProvider.config.keyId" id="keyId" class="form-control" />
+	        </div>
+		 <kc-tooltip>{{:: 'apple.keyIdToolTip' | translate}}</kc-tooltip>
+	    </div>
+	    <div class="form-group">
+		<label class="col-md-2 control-label" for="teamId"><span class="required">*</span> {{:: 'apple.teamId' | translate}}</label>
+		<div class="col-md-6">
+		     <input ng-model="identityProvider.config.teamId" id="teamId" class="form-control" />
+		</div>
+		<kc-tooltip>{{:: 'apple.teamIdToolTip' | translate}}</kc-tooltip>
+	    </div>
             <div class="form-group clearfix">
                 <label class="col-md-2 control-label" for="defaultScope">{{:: 'default-scopes' | translate}} </label>
                 <div class="col-md-6">

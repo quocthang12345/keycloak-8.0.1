@@ -138,7 +138,7 @@
                         <password>sa</password>
                     </security>
                 </datasource>
-                <datasource jndi-name="java:jboss/datasources/KeycloakDS" pool-name="KeycloakDS" enabled="true" use-java-context="true">
+               <datasource jndi-name="java:jboss/datasources/KeycloakDS" pool-name="KeycloakDS" enabled="true" use-java-context="true">
 		   <connection-url>jdbc:postgresql://localhost/keycloak</connection-url>
 		   <driver>postgresql</driver>
 		   <pool>
@@ -537,7 +537,7 @@
                 <provider name="default" enabled="true">
                     <properties>
                         <property name="dataSource" value="java:jboss/datasources/KeycloakDS"/>
-                        <property name="initializeEmpty" value="false"/>
+                        <property name="initializeEmpty" value="true"/>
                         <property name="migrationStrategy" value="update"/>
                         <property name="migrationExport" value="${jboss.home.dir}/keycloak-database-update.sql"/>
                     </properties>
@@ -590,7 +590,7 @@
     </interfaces>
     <socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
         <socket-binding name="ajp" port="${jboss.ajp.port:8009}"/>
-        <socket-binding name="http" port="${jboss.http.port:8080}"/>
+        <socket-binding name="http" port="${jboss.http.port:8280}"/>
         <socket-binding name="https" port="${jboss.https.port:8443}"/>
         <socket-binding name="management-http" interface="management" port="${jboss.management.http.port:9990}"/>
         <socket-binding name="management-https" interface="management" port="${jboss.management.https.port:9993}"/>

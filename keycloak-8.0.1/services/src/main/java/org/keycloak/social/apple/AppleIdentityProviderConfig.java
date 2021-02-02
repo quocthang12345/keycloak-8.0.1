@@ -1,5 +1,6 @@
 package org.keycloak.social.apple;
 
+
 import org.keycloak.broker.oidc.OAuth2IdentityProviderConfig;
 import org.keycloak.models.IdentityProviderModel;
 

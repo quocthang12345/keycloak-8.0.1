@@ -138,7 +138,6 @@ public abstract class AbstractOAuth2IdentityProvider<C extends OAuth2IdentityPro
     }
 
     protected String extractTokenFromResponse(String response, String tokenName) {
-    	logger.info("extract");
         if(response == null)
             return null;
 
@@ -243,7 +242,7 @@ public abstract class AbstractOAuth2IdentityProvider<C extends OAuth2IdentityPro
     }
 
     protected Response exchangeStoredToken(UriInfo uriInfo, EventBuilder event, ClientModel authorizedClient, UserSessionModel tokenUserSession, UserModel tokenSubject) {
-        FederatedIdentityModel model = session.users().getFederatedIdentity(tokenSubject, getConfig().getAlias(), authorizedClient.getRealm());
+    	FederatedIdentityModel model = session.users().getFederatedIdentity(tokenSubject, getConfig().getAlias(), authorizedClient.getRealm());
         if (model == null || model.getToken() == null) {
             event.detail(Details.REASON, "requested_issuer is not linked");
             event.error(Errors.INVALID_TOKEN);
@@ -270,7 +269,7 @@ public abstract class AbstractOAuth2IdentityProvider<C extends OAuth2IdentityPro
     }
 
     protected Response exchangeSessionToken(UriInfo uriInfo, EventBuilder event, ClientModel authorizedClient, UserSessionModel tokenUserSession, UserModel tokenSubject) {
-        String accessToken = tokenUserSession.getNote(FEDERATED_ACCESS_TOKEN);
+    	String accessToken = tokenUserSession.getNote(FEDERATED_ACCESS_TOKEN);
         if (accessToken == null) {
             event.detail(Details.REASON, "requested_issuer is not linked");
             event.error(Errors.INVALID_TOKEN);
@@ -290,7 +289,6 @@ public abstract class AbstractOAuth2IdentityProvider<C extends OAuth2IdentityPro
 
 
     public BrokeredIdentityContext getFederatedIdentity(String response) {
-    	logger.info("federatedIdentify");
         String accessToken = extractTokenFromResponse(response, getAccessTokenResponseParameter());
 
         if (accessToken == null) {
@@ -408,8 +406,6 @@ public abstract class AbstractOAuth2IdentityProvider<C extends OAuth2IdentityPro
             }
         }
     }
-    
-
 
     protected JsonWebToken generateToken() {
         JsonWebToken jwt = new JsonWebToken();

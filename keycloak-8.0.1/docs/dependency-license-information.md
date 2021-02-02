@@ -1,27 +1,27 @@
-# Thông tin về giấy phép phụ thuộc 
+# Dependency License Information
 
-## Tại sao chúng ta phải theo dõi thông tin bằng giấy phép? 
+## Why should we track license info?
 
-Chúng ta cần phải theo dõi các giấy phép áp dụng cho mỗi bên thứ ba (non - Keycloak) dependency (Maven hoặc Otherwise) dùng Keycloak sử dụng. Thông tin này có thể được sử dụng để kiểm tra xem có xung đột hay các vấn đề khác có thể tạo ra một encumberance hợp pháp cho người dùng hay nhà phát triển của Keycloak. 
+We need to keep track of the licenses that apply to each third party (non-Keycloak) dependency (maven or otherwise) that Keycloak uses. This information can be used to check if there are conflicts or other issues that could create a legal encumberance for the users or developers of Keycloak.
 
-## Cách xác định thông tin bằng giấy phép phụ thuộc 
+## How to determine a dependency's license info
 
-Vì hệ sinh thái maven không duy trì siêu dữ liệu cấp giấy phép chất lượng cao, không có giấy phép quy trình tự động (giống plugin maven trong module example) là chấp nhận được đối với việc xác định phép áp dụng cho một phần phụ thuộc của maven cụ thể. Giấy phép thuộc phần phụ thuộc không maven, (Javscript, hình ảnh, phông chữ, etc.) cũng phải được xác định theo cách thủ công. 
+Since the maven ecosystem does not maintain high quality license metadata, no automated process (like license-maven-plugin for example) is acceptable for making the determination of what license applies to a particular maven dependency. The licenses of non-maven dependencies (JavaScript, images, fonts, etc.) must also be determined manually.
 
-Để xác định bằng thủ công một giấy phép, bản sao / thanh toán mã nguồn ở thẻ hoặc cam kết áp dụng cho phiên bản phụ thuộc bạn đang thêm hoặc cập nhật (licenses đôi khi thay đổi giữa versions). Điều này dễ dàng hơn nhiều để làm ngay lập tức, đặc biệt là đối với các phụ thuộc không phải maven, như sau đây có thể không rõ ràng khi các tập tin xuất phát từ phiên bản nào. Sau khi bạn có nguồn, hãy nhìn vào readme và tìm kiếm các tệp giấy phép. Đối với các dự án maven, bạn cũng có thể nhìn vào quả bông, nhưng thông tin bằng giấy phép của nó không phải lúc nào cũng xuất hiện hay chính xác. Nó thường hiển nhiên là cái giấy phép, nhưng đôi khi một phần của nguồn có giấy phép khác, hoặc có thể có nhiều giấy phép áp dụng cho phụ thuộc của bạn. 
+To manually determine a license, clone/checkout the source code at the tag or commit that applies to the version of the dependency you're adding or updating (licenses do sometimes change between versions). This is a lot easier to do immediately, especially for non-maven dependencies, as later it may not be clear where the files came from, or what version they were. Once you have the source, look at the readme and search around for license files. For maven projects, you can look at the pom too, but its license information is not always present or correct. It's usually obvious what the license is, but sometimes one part of the source has a different license, or there may be more than one license that applies to your dependency.
 
-## Cách lưu trữ thông tin bằng giấy phép 
+## How to store license info
 
-Thông thường, mỗi zip nhận được distibuted đến người dùng cần chứa xml và các tệp giấy phép cá nhân, cộng với tệp html được tạo vào thời gian xây dựng. 
+Typically, each zip that gets distibuted to users needs to contain a license XML and individual license files, plus an html file generated at build time.
 
-Các tệp xml và cá nhân được duy trì trong git. Khi bạn thay đổi hoặc thêm phụ thuộc vào phần: 
+The XML and individual files are maintained in git. When you change or add a dependency that is a part of:
 
 - the server, modify `distribution/feature-packs/server-feature-pack/src/main/resources/licenses/rh-sso/license.xml`.
 - an adapter, modify `distribution/{saml-adapters,adapters}/*/*/src/main/resources/licenses/rh-sso/licenses.xml`, for example `distribution/saml-adapters/as7-eap6-adapter/eap6-adapter-zip/src/main/resources/licenses/rh-sso/licenses.xml`.
 
 Maven dependencies go into a `licenseSummary/dependencies/dependency` element, and non-maven dependencies go into a `licenseSummary/others/other` element.
 
-Dưới đây là một số ví dụ về phụ thuộc maven: 
+Here are some examples of maven dependencies:
 
 ```xml
     <dependency>
@@ -48,7 +48,7 @@ Dưới đây là một số ví dụ về phụ thuộc maven:
     </dependency>
 ```
 
-và non-maven dependencies:
+and non-maven dependencies:
 
 ```xml
     <other>
@@ -77,17 +77,17 @@ và non-maven dependencies:
     </other>
 ```
 
-Hãy nhìn vào các licenses.xml  trong kho này để lấy thêm ví dụ. 
+Look at the licenses.xml files in this repository for more examples.
 
-Sau khi sửa đổi license XML, bạn nên chạy `download-license-files.sh` một lần nữa. Script này sẽ cập nhật các tệp giấy phép cá nhân được lưu trữ trong cùng thư mục như xml. 
+After modifying a license XML, you must run `download-license-files.sh` against it. This script will update the individual license files that are stored in the same directory as the XML.
 
-Dòng lệnh ví dụ: 
+Example command line:
 
 ```
 $ distribution/licenses-common/download-license-files.sh distribution/feature-packs/server-feature-pack/src/main/resources/licenses/rh-sso/licenses.xml
 ```
 
-Các lệnh shell sau đây phải có sẵn cho tập lệnh nầy để làm việc: 
+The following shell commands must be available for the script to work:
 
 - curl
 - dos2unix
@@ -96,4 +96,4 @@ Các lệnh shell sau đây phải có sẵn cho tập lệnh nầy để làm v
 
 ### Product builds
 
-RH-SSO được xây dựng trên một hệ thống xây dựng nội bộ. Nếu bạn đã thêm hoặc cập nhật dữ liệu giấy phép cho sản phẩm, bạn có thể cần nhập phần phụ thuộc tương ứng vào hệ thống xây dựng nội bộ này. 
+RH-SSO is built on an internal build system. If you've added or updated license data for the product, you might need to import the corresponding dependency artifact into this internal build system.

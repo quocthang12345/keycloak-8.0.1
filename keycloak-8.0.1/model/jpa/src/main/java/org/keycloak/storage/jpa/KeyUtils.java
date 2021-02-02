@@ -50,7 +50,7 @@ public class KeyUtils {
      */
     public static void assertValidKey(String key) throws IllegalArgumentException {
         if (! isValidKey(key)) {
-            LOG.warnf("The given key is not a valid key per specification, future migration might fail: %s", key);    
-          }
+            LOG.warnf("The given key is not a valid key per specification, future migration might fail: %s", key);
+        }
     }
 }

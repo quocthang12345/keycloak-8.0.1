@@ -1,92 +1,110 @@
-# Quản trị keycloak 
+# Keycloak Governance
 
 * [Vision](#vision) 
 * [Maintainers](#maintainers) 
 * [Contributing](#contributing)
 
-## Mục tiêu
+## Vision
 
-Keycloak nhằm dễ sử dụng và nhẹ nhàng. Dự án được thành lập để giúp các nhà phát triển ứng dụng dễ dàng 
-Để bảo vệ các ứng dụng và dịch vụ hiện đại. 
-Quy tắc 80 / 20, khẳng định các yêu cầu đến từ các trường hợp sử dụng, là một phần cốt lõi của tầm nhìn phía sau 
-Keycloak. Chúng tôi thực sự tin rằng nếu keycloak hỗ trợ tất cả các trường hợp sử dụng theo mặc định thì nó sẽ béo lên và khó sử dụng. 
-Keycloak nhằm mục đích là opinionated và làm cho nó dễ dàng đạt được các trường hợp sử dụng chung, trong khi vẫn bật các trường hợp sử dụng ít phổ biến hơn thông qua tiện ích tùy chỉnh. 
+Keycloak aims to be easy to use and lightweight. The project was founded to make it easy for application developers 
+to secure modern applications and services.
+
+The 80/20 rule, that states 80% of requirements come from around 20% of use cases, is a core part of the vision behind 
+Keycloak. We strongly believe if Keycloak would support all use cases by default it would become bloated and hard to use.
+
+Keycloak aims to be opinionated and make it as easy as possible to achieve the common use cases, while still
+enabling the less common use cases through custom extensions.
 
 
-## Những dự án
+## Projects
 
 Keycloak consists of several projects:
 
-* [Keycloak](https://github.com/keycloak/keycloak) - Keycloak Server và Java adapters
-* [Keycloak Documentation](https://github.com/keycloak/keycloak-documentation) - Tài liệu Keycloak
-* [Keycloak QuickStarts](https://github.com/keycloak/keycloak-quickstarts) - Bắt đầu nhanh với Keycloak
-* [Keycloak Containers](https://github.com/keycloak/keycloak-containers) - Kho ảnh Keycloak
-* [Keycloak Gatekeeper](https://github.com/keycloak/keycloak-gatekeeper) - Dịch vụ proxy để bảo mật ứng dụng và dịch vụ với Keycloak
-* [Keycloak Node.js Connect](https://github.com/keycloak/keycloak-nodejs-connect) - Node.js adapter Keycloak
-* [Keycloak Node.js Admin Client](https://github.com/keycloak/keycloak-nodejs-admin-client) - Node.js library Keycloak Admin REST API
+* [Keycloak](https://github.com/keycloak/keycloak) - Keycloak Server and Java adapters
+* [Keycloak Documentation](https://github.com/keycloak/keycloak-documentation) - Documentation for Keycloak
+* [Keycloak QuickStarts](https://github.com/keycloak/keycloak-quickstarts) - QuickStarts for getting started with Keycloak
+* [Keycloak Containers](https://github.com/keycloak/keycloak-containers) - Container images for Keycloak
+* [Keycloak Gatekeeper](https://github.com/keycloak/keycloak-gatekeeper) - Proxy service to secure apps and services with Keycloak
+* [Keycloak Node.js Connect](https://github.com/keycloak/keycloak-nodejs-connect) - Node.js adapter for Keycloak
+* [Keycloak Node.js Admin Client](https://github.com/keycloak/keycloak-nodejs-admin-client) - Node.js library for Keycloak Admin REST API
 
-Mô hình quản trị tương tự áp dụng cho tất cả các dự án. Tuy nhiên, danh sách maintainers có thể khác nhau theo dự án. 
-
-
-
-## Bảo trì
-
-Danh sách maintainers có thể được tìm thấy trong tập tin [MAINTAINERS.md](MAINTAINERS. md) trong kho cho riêng lẻ các dự án được liệt kê trong phần [Projects](#projects). 
-
-### Trách nhiệm bảo trì 
-
-Một nhà duy trì là một người đã cho thấy sự hiểu biết sâu sắc về tầm nhìn, các đặc điểm và codebase. Nó là trách nhiệm thúc đẩy dự án tiến lên, khuyến khích cộng tác và đóng góp, và nói chung là giúp đỡ cộng đồng. 
-
-Trách nhiệm của một nhà duy trì bao gồm, nhưng không giới hạn trong :
-
-* Tham gia thảo luận thiết kế 
-* tích cực giám sát danh sách thư, diễn đàn người dùng và trò chuyện 
-* đóng góp mã chất lượng cao 
-* hãy duy trì tri thức sâu sắc về tầm nhìn, đặc điểm và khả năng sinh học 
-* xem xét yêu cầu kéo theo cá nhân hoặc ủy quyền cho các chuyên gia trong khu vực có liên quan 
-* giúp cộng đồng 
-
-### Trở thành một nhà bảo trì 
-
-Để trở thành một nhà duy trì, bạn cần phải chứng minh những điều sau: 
-* hiểu rõ về tầm nhìn, các đặc điểm và codebase 
-* đóng góp các tính năng lớn hơn 
-* đóng góp sửa chữa lỗi 
-* tham gia thảo luận thiết kế 
-* tham gia vào yêu cầu kéo dài 
-* khả năng cộng tác với đội 
-* giúp cộng đồng 
-Một nhà duy trì mới phải được đề xuất bằng cách gửi một email đến  [developer mailing list]((https://lists.jboss.org/mailman/listinfo/keycloak-dev).
-Email phải bao gồm bằng chứng về danh sách trên. 
-Sau đó, nhà duy trì sẽ thảo luận về đề xuất. Nếu bất cứ ai có thể có hoặc muốn thêm thông tin, thì nhà duy trì 
-Sẽ liên lạc trực tiếp với ứng cử viên để thảo luận thêm. 
-Đối với ứng cử viên được chấp nhận là một nhà duy trì ít nhất 2 / 3 trong số các nhà duy trì hiện có phải phê duyệt ứng cử viên. 
+The same governance model applies to all projects. However, the list of maintainers may vary per project. 
 
 
-### Thay đổi trong Maintainership 
+## Maintainers
 
-Maintainers có thể bị xóa nếu ít nhất 2/3 đồng ý maintainers với nhau 
+The list of maintainers can be found in the [MAINTAINERS.md](MAINTAINERS.md) file in the repository for the individual 
+projects listed in the [Projects](#projects) section.
+
+### Maintainer Responsibilities
+
+A maintainer is someone who has shown deep knowledge of vision, features and codebase. It is their 
+responsibility to drive the project forward, encourage collaboration and contributions, and generally help the 
+community.
+
+Responsibilities of a maintainer include, but are not limited to:
+
+* Engage in design discussions
+* Actively monitor mailing lists, user forum and chat
+* Contribute high quality code
+* Maintain deep knowledge of vision, features and codebase
+* Review pull requests either personally or delegate to experts in the relevant area
+* Helping the community
+
+### Becoming a Maintainer
+
+To become a maintainer, you need to demonstrate the following:
+
+* Good understanding of vision, features and codebase
+* Contribution of larger features
+* Contribution of bug fixes
+* Participation in design discussions
+* Participation in pull request reviews
+* Ability to collaborate with the team
+* Helping the community
+
+A new maintainer must be proposed by sending an email to the [developer mailing list](https://lists.jboss.org/mailman/listinfo/keycloak-dev).
+The email should include evidence of the above list.
+
+The existing maintainers will then discuss the proposal. If anyone objects or wants more information, the maintainers 
+will reach out to the nominee directly for further discussion. 
+
+For the nominee to be accepted as a maintainer at least 2/3 of existing maintainers have to approve the nominee.
 
 
-## Sự thay đổi trong đóng góp 
+### Changes in Maintainership
 
-Quá trình xem xét các thay đổi được đề xuất khác nhau tùy thuộc vào kích thước và tác động của thay đổi. 
+Maintainers can be removed if at least 2/3 of existing maintainers agree.
 
-### Thay đổi nhỏ 
 
-Thay đổi nhỏ là lỗi của lỗi, một sự tăng cường nhỏ hoặc thêm vào các tính năng hiện tại. 
-Để đề xuất thay đổi nhỏ, chỉ cần tạo một vấn đề trong các vấn đề [issue tracker](https://issues.jboss.org/browse/KEYCLOAK) và 
-Gửi yêu cầu kéo. 
-Một nhà duy trì sẽ chịu trách nhiệm cho việc phê duyệt yêu cầu kéo dài. Nhà duy trì có thể đánh giá sâu sắc 
-Yêu cầu hoặc ủy quyền cho chuyên gia trong lĩnh vực tương ứng. 
-Nếu thay đổi này có tác động lớn hơn nó phải tuân theo quy trình cho những thay đổi lớn hơn. 
+## Contributing Changes
 
-### Thay đổi lớn
+The process of reviewing proposed changes differs depending of the size and impact of the change.
 
-Đối với những thay đổi lớn hơn tất cả những người đóng góp và người đóng góp nên có cơ hội xem xét thay đổi. Chuyện này xong rồi 
-Gửi email đến [developer mailing list](https://lists.jboss.org/mailman/listinfo/keycloak-dev) để bắt đầu một vụ thảo luận xung quanh thay đổi. 
-Vì tính năng mới mà chúng tôi khuyên bạn nên tạo đề xuất thiết kế. Không có yêu cầu nghiêm ngặt về nội dung hoặc bố cục, 
-Nhưng ít nhất nó phải che đậy động lực, sử dụng các trường hợp và cách sử dụng tính năng này. Một đề xuất thiết kế được tạo ra 
-Gửi quảng cáo đến [design proposals repository](https://github.com/keycloak/keycloak-community/tree/master/design). 
-Người đóng góp có thể quyết định gửi yêu cầu kéo trước khi thảo luận về danh sách thư, và việc tạo ra thiết kế đề xuất. Tuy nhiên, sự thay đổi sẽ không được chấp nhận cho đến khi nó được thảo luận trên danh sách gửi thư. 
-Nếu có bất kỳ sự phản đối nào đối với sự thay đổi họ có thể được giải quyết qua các cuộc thảo luận về danh sách gửi thư hoặctrong yêu cầu kéo. Nếu không thể thực hiện một nghị quyết có thể được chấp nhận nếu ít nhất 2 / 3 của maintainers chấp thuận thay đổi. 
+### Minor Changes
+
+A minor change is a bug fix, a smaller enhancement or a smaller addition to existing features.
+
+To propose a minor change, simply create an issue in our [issue tracker](https://issues.jboss.org/browse/KEYCLOAK) and
+send a pull request.
+
+A maintainer will be responsible for ultimately approving the pull request. The maintainer may do a deep review of the
+pull request or delegate to an expert in the corresponding area.
+
+If the change has a bigger impact it has to follow the process for larger changes.
+
+### Larger Changes
+
+For larger changes all maintainers and contributors should have a chance of reviewing the change. This is done by
+sending an email to the [developer mailing list](https://lists.jboss.org/mailman/listinfo/keycloak-dev) to start a
+discussion around the change.
+
+For new features we highly recommend creating a design proposal. There is no strict requirement of the content or layout,
+but it should at least cover motivation, use cases and how the feature will be used. A design proposal is created by
+sending a PR to [design proposals repository](https://github.com/keycloak/keycloak-community/tree/master/design).
+
+The contributor can decide to send a pull request prior to discussion on the mailing list, and the creation of a design
+proposal. However, the change will not be accepted until it has been discussed on the mailing list.
+
+If there are any objections to the change they can in most cases be resolved through discussions on the mailing list or
+on the pull request. If a resolution can not be made it can be accepted if at least 2/3 of maintainers approve the change. 

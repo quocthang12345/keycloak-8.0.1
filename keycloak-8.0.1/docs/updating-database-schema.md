@@ -1,11 +1,11 @@
 Updating Database Schema
 ========================
 
-Keycloak hỗ trợ tự động di chuyển cơ sở dữ liệu sang một phiên bản mới. Điều này được thực hiện bằng cách áp dụng một hoặc nhiều bộ thay đổi 
-Với cơ sở dữ liệu hiện tại. Điều này có nghĩa là nếu bạn cần làm bất kỳ thay đổi nào đối với lược đồ cơ sở dữ liệu bạn cần tạo 
-Thay đổi có thể thay đổi giản đồ cũng như bất kỳ dữ liệu hiện có nào. 
+Keycloak supports automatically migrating the database to a new version. This is done by applying one or more change-sets
+to the existing database. This means if you need to do any changes to database schemas you need to create 
+a change-set that can transform the schema as well as any existing data.
 
-Điều này bao gồm các thay đổi đối với:
+This includes changes to:
  
 * Realm entities
 * User entities
@@ -13,18 +13,20 @@ Thay đổi có thể thay đổi giản đồ cũng như bất kỳ dữ liệu
 * Event entities
 
  
-Tạo sự thay đổi 
+Creating a change-set
 -------------------------
 
-Chúng tôi sử dụng Liquibase để hỗ trợ cập nhật cơ sở dữ liệu. Các bộ thay đổi nằm trong 
+We use Liquibase to support updating the database. The change-sets are located in 
 [`model/jpa/src/main/resources/META-INF`](../model/jpa/src/main/resources/META-INF).
-Có một tập tin riêng cho mỗi bản phát hành đòi hỏi phải thay đổi cơ sở dữ liệu. 
+There's a separate file for each release that requires database changes.
 
-Để tạo sự thay đổi theo cách thủ công, hãy thêm tệp mới vào vị trí ở trên cùng với tên  `jpa-changelog-<version>.xml`. Tập tin này có thể chứa một  `change-set` với `id` bằng với phiên bản tiếp theo để phát hành và  `author` Đặt thành email của bạn địa chỉ. Sau đó hãy xem tài liệu Liquibase về cách viết tập tin này. Thêm tham chiếu vào tệp này trong 
+To manually create a change-set add a new file in the above location with the name `jpa-changelog-<version>.xml`. This file 
+should contain a single `change-set` with `id` equal to the next version to be released and `author` set to your email 
+address. Then look at Liquibase documentation on how to write this file. Add a reference to this file in
 [`jpa-changelog-master.xml`](../model/jpa/src/main/resources/META-INF/jpa-changelog-master.xml).
-Tệp phải có một thay đổi duy nhất change-set và id của change-set sẽ là phiên bản tiếp theo để phát hành. 
+The file should have a single change-set and the id of the change-set should be the next version to be released. 
 
-Bạn cũng có thể có Liquibase và Hibernate tạo ra một cái cho bạn. Để làm theo các bước này: 
+You can also have Liquibase and Hibernate create one for you. To do this follow these steps:
 
 1. Delete existing databases  
    `rm keycloak*h2.db`
@@ -40,14 +42,17 @@ Bạn cũng có thể có Liquibase và Hibernate tạo ra một cái cho bạn.
 6. Create a change-set file:
    `mvn -f connections/jpa-liquibase/pom.xml liquibase:diff -Durl=jdbc:h2:keycloak-old -DreferenceUrl=jdbc:h2:keycloak -Dliquibase.diffChangeLogFile=changelog.xml`    
     
-Điều này sẽ tạo ra nhật ký `changelog.xml`. Khi đã tạo chỉnh sửa tệp và kết hợp tất cả các tập tin `change-sets` vào một nhóm đơn lẻ và thay đổi' id' thành phiên bản tiếp theo để phát hành và `author` đến địa chỉ email của bạn. Vậy thì hãy thực hiện theo các bước trên để sao chép vào đúng vị trí và cập nhật bản thay đổi `jpa-changelog-master.xml`. Anh phải theo cách thủ công thêm mục nhập vào `change-sets` để cập nhật dữ liệu hiện có nếu yêu cầu. 
+This will generate the file `changelog.xml`. Once it's generated edit the file and combine all `change-sets` into
+a single `change-set` and change the `id` to the next version to be released and `author` to your email address. Then
+follow the steps above to copy it to the correct location and update `jpa-changelog-master.xml`. You have to manually
+add entries to the `change-set` to update existing data if required. 
 
-Khi bạn có cập nhật thay đổi - tập trung có thể xác thực giản đồ cho bạn. Lần đầu tiên chạy: 
+When you have update the change-set Hibernate can validate the schema for you. First run:
 
     rm -rf keycloak*h2.db
     mvn -f testsuite/utils/pom.xml exec:java -Pkeycloak-server -Dkeycloak.connectionsJpa.url='jdbc:h2:keycloak' -Dkeycloak.connectionsJpa.databaseSchema='update'
     
-Khi máy chủ bắt đầu hoàn toàn, hãy dừng lại và chạy: 
+Once the server has started fully, stop it and run:
     
     mvn -f testsuite/utils/pom.xml exec:java -Pkeycloak-server -Dkeycloak.connectionsJpa.url='jdbc:h2:keycloak' -Dkeycloak.connectionsJpa.databaseSchema='development-validate'
 
@@ -55,4 +60,4 @@ Khi máy chủ bắt đầu hoàn toàn, hãy dừng lại và chạy:
 Testing database migration
 --------------------------
 
-Lấy dữ liệu từ một phiên bản cũ của Keycloak bao gồm các ứng dụng demo. Bắt đầu máy chủ với cái này và thử nghiệm. 
+Get the database from an old version of Keycloak that includes the demo applications. Start the server with this and test it.

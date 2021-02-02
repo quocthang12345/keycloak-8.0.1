@@ -1,18 +1,18 @@
-# Cộng đồng keycloak 
+# Keycloak Community
 
-Keycloak là một dạng mã nguồn mở và là giải pháp quản lý truy cập cho các ứng dụng hiện đại và dịch vụ. 
+Keycloak is an Open Source Identity and Access Management solution for modern Applications and Services.
 
-## Xây dựng và làm việc với codebase 
+## Building and working with the codebase
 
-Chi tiết để xây dựng từ nguồn và làm việc với codebase được cung cấp trong  [building and working with the code base](docs/building.md) guide.
+Details for building from source and working with the codebase are provided in the [building and working with the code base](docs/building.md) guide.
 
-## Đóng góp vào keycloak 
+## Contributing to Keycloak
 
-Keycloak là một dự án theo hướng nguồn mở và chúng tôi chào mừng các đóng góp cũng như phản hồi từ cộng đồng.  
+Keycloak is an Open Source community-driven project and we welcome contributions as well as feedback from the community.
 
-Chúng tôi có một vài hướng dẫn để giúp bạn thành công với sự đóng góp của bạn cho keycloak. 
+We do have a few guidelines in place to help you be successful with your contribution to Keycloak.
 
-Đây là danh sách kiểm tra nhanh cho một PR tốt, thêm chi tiết bên dưới: 
+Here's a quick checklist for a good PR, more details below:
 
 1. [Keycloak Dev Mailing List](https://lists.jboss.org/mailman/listinfo/keycloak-dev)
 2. A JIRA associated with the PR
@@ -24,72 +24,72 @@ Chúng tôi có một vài hướng dẫn để giúp bạn thành công với s
 7. Includes functional/integration test
 8. Includes documentation
 
-Sau khi bạn đã gửi thông tin pr của mình cho vui lòng theo dõi nhận xét / phản hồi. Chúng tôi dự trữ quyền đóng cửa không hoạt động nếu 
-Bạn không trả lời trong vòng 2 tuần, (hãy nhớ rằng bạn luôn có thể mở một PR mới nếu kết thúc do inactivity). 
+Once you have submitted your PR please monitor it for comments/feedback. We reserve the right to close inactive PRs if
+you do not respond within 2 weeks (bear in mind you can always open a new PR if it is closed due to inactivity).
 
-Ngoài ra, hãy nhớ rằng chúng ta sẽ nhận được một lượng lớn PRS và cũng có mã để viết chúng ta, vì vậy chúng ta có thể 
-Không thể phản ứng với pr của bạn ngay lập tức. Nơi tốt nhất để ping chúng ta là trên sợi dây bạn bắt đầu trong danh sách gửi thư của dev. 
+Also, please remember that we do receive a fairly large amount of PRs and also have code to write ourselves, so we may
+not be able to respond to your PR immediately. The best place to ping us is on the thread you started on the dev mailing list.
 
-### Tìm thứ gì đó để làm việc 
+### Finding something to work on
 
-Nếu bạn muốn đóng góp cho keycloak, nhưng không chắc chắn phải làm gì, bạn có thể tìm một số lượng mở 
-Các vấn đề đang chờ đóng góp trong 
+If you would like to contribute to Keycloak, but are not sure exactly what to work on, you can find a number of open
+issues that are awaiting contributions in the 
 [Keycloak JIRA](https://issues.jboss.org/projects/KEYCLOAK/versions/12340167).
 
-### Mở một cuộc thảo luận về Keycloak Dev Mailing List
+### Open a discussion on Keycloak Dev Mailing List
 
-Như keycloak là một dự án theo hướng cộng đồng mà chúng tôi yêu cầu cộng tác viên gửi mô tả về những gì họ đang lên kế hoạch 
-liên lạc qua [Keycloak Dev Mailing List](https://lists.jboss.org/mailman/listinfo/keycloak-dev).
+As Keycloak is a community-driven project we require contributors to send a description of what they are planning to 
+work on to the [Keycloak Dev Mailing List](https://lists.jboss.org/mailman/listinfo/keycloak-dev).
 
-Chúng tôi khuyên bạn nên bắt đầu thảo luận trước khi gửi PR. Qua danh sách gửi thư mà bạn có thể có giá trị 
-Phản hồi cả từ nhóm keycloak core cũng như cộng đồng rộng lớn. 
+We recommend starting the discussion prior to submitting your PR. Through the mailing list you can get valuable
+feedback both from the core Keycloak team as well as the wider community.
 
-### Tạo issue in Keycloak JIRA
+### Create an issue in Keycloak JIRA
 
-Hãy dành thời gian để viết một cách thích hợp bao gồm một bản tóm tắt tốt và mô tả. 
+Take your time to write a proper JIRA including a good summary and description. 
 
-Hãy nhớ đây có thể là điều đầu tiên mà người đánh giá của bạn sẽ xem xét để có được ý tưởng về những gì bạn đang đề xuất 
-Và cũng sẽ được cộng đồng sử dụng trong tương lai để tìm hiểu về những tính năng và tính năng mới được bao gồm trong tương lai 
-Bản phát hành mới. 
+Remember this may be the first thing a reviewer of your PR will look at to get an idea of what you are proposing 
+and it will also be used by the community in the future to find about what new features and enhancements are included in 
+new releases.
 
 Note: Keycloak Node.js Admin Client uses GitHub issues and not the Keycloak JIRA.
 
-### Triển khai
+### Implementing
 
-Chi tiết để xây dựng từ nguồn và làm việc với codebase được cung cấp 
+Details for building from source and working with the codebase are provided in the 
 [building and working with the code base](docs/building.md) guide.
 
-Không định dạng hoặc tắt mã không liên quan trực tiếp đến đóng góp của bạn. Nếu bạn làm điều này sẽ đáng kể 
-Tăng cường nỗ lực của chúng tôi trong việc xem xét pr của bạn. Nếu bạn có nhu cầu mạnh mẽ về mã thì gửi một PR riêng biệt cho 
-Refactoring. 
+Do not format or refactor code that is not directly related to your contribution. If you do this it will significantly
+increase our effort in reviewing your PR. If you have a strong need to refactor code then submit a separate PR for the
+refactoring.
 
-### Kiểm thử
+### Testing
 
-Chi tiết để triển khai thử nghiệm được cung cấp  [writing tests](docs/tests-development.md) guide.
+Details for implementing tests are provided in the [writing tests](docs/tests-development.md) guide.
 
-Không thêm khung chế nhạo hoặc khuôn khổ thử nghiệm khác chưa thành phần của testsuite. Làm ơn viết thử nghiệm 
-Như chúng ta đã viết thử nghiệm. 
+Do not add mock frameworks or other testing frameworks that are not already part of the testsuite. Please write tests
+in the same way as we have written our tests.
 
-### Tài liệu
+### Documentation
 
-Chúng tôi yêu cầu đóng góp để bao gồm tài liệu có liên quan. Bên cạnh PR của bạn thay đổi mã, hãy chuẩn bị PR [Keycloak Documentation](https://github.com/keycloak/keycloak-documentation).
+We require contributions to include relevant documentation. Alongside your PR for code changes, prepare a PR to the [Keycloak Documentation](https://github.com/keycloak/keycloak-documentation).
 
-Trong mô tả PR của bạn bao gồm liên kết đến PR  [Keycloak Documentation](https://github.com/keycloak/keycloak-documentation).
+In the description of your PR include a link to the PR to [Keycloak Documentation](https://github.com/keycloak/keycloak-documentation).
 
-### Gửi PR của bạn
+### Submitting your PR
 
-Khi chuẩn bị pr của bạn để đảm bảo bạn có một cam kết và chi nhánh của bạn là rebased trên chi nhánh chính từ 
-Kho dự án. 
+When preparing your PR make sure you have a single commit and your branch is rebased on the master branch from the 
+project repository.
 
-Điều này có nghĩa là sử dụng lệnh 'git rebase' và không phải 'git' khi tích hợp thay đổi từ chính đến branch của bạn.Xem tại 
-[Git Documentation](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) để biết thêm chi tiết.
+This means use the `git rebase` command and not `git pull` when integrating changes from master to your branch. See
+[Git Documentation](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) for more details.
 
-Chúng tôi yêu cầu bạn chen vào một cam kết. Bạn có thể làm điều này với lệnh `git rebase -i HEAD~X` 
-Là số cam kết bạn muốn siết chặt.Có thể xem tại[Git Documentation](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History)
-để biết thêm chi tiết.
+We require that you squash to a single commit. You can do this with the `git rebase -i HEAD~X` command where X
+is the number of commits you want to squash. See the [Git Documentation](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History)
+for more details.
 
-Điều trên giúp chúng tôi xem xét pr của bạn và cũng giúp chúng tôi duy trì kho lưu trữ. Nó cũng được yêu cầu 
-Quá trình sáp nhập tự động của chúng ta. 
+The above helps us review your PR and also makes it easier for us to maintain the repository. It is also required by
+our automatic merging process. 
 
-Chúng tôi cũng yêu cầu thông báo cam kết có số lượng phát hành Keycloak JIRA (example cam kết 
- "KEYCLOAK-9876 tính năng mới tuyệt vời của tôi" ). 
+We also require that the commit message is prefixed with the Keycloak JIRA issue number (example commit message 
+"KEYCLOAK-9876 My super cool new feature").

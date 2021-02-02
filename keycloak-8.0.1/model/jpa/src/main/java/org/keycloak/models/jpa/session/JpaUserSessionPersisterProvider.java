@@ -254,8 +254,8 @@ public class JpaUserSessionPersisterProvider implements UserSessionPersisterProv
         if (maxResults != -1) {
             query.setMaxResults(maxResults);
         }
-        
-        List<PersistentUserSessionAdapter> result =  query.getResultStream()
+
+        List<PersistentUserSessionAdapter> result = query.getResultStream()
                 .map(this::toAdapter)
                 .collect(Collectors.toList());
 

@@ -67,7 +67,7 @@ public abstract class AbstractIdpAuthenticator implements Authenticator {
         }
         BrokeredIdentityContext brokerContext = serializedCtx.deserialize(context.getSession(), authSession);
 
-        if (!brokerContext.getIdpConfig().isEnabled()) {
+		if (!brokerContext.getIdpConfig().isEnabled()) {
             sendFailureChallenge(context, Response.Status.BAD_REQUEST, Errors.IDENTITY_PROVIDER_ERROR, Messages.IDENTITY_PROVIDER_UNEXPECTED_ERROR, AuthenticationFlowError.IDENTITY_PROVIDER_ERROR);
         }
 

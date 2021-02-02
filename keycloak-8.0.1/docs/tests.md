@@ -1,39 +1,40 @@
-Thực hiện kiểm thử 
+Executing tests
 ===============
 
 Browser
 -------
 
-Testsuite sử dụng selen. Theo mặc định, nó sử dụng HtmlUnit WebDriver, nhưng cũng có thể được thực hiện bằng chrome hoặc firefox. 
+The testsuite uses Selenium. By default it uses the HtmlUnit WebDriver, but can also be executed with Chrome or Firefox.
 
-Để chạy thử nghiệm với firefox thêm  `-Dbrowser=firefox` hoặc với Chrome thì thêm `-Dbrowser=chrome`
+To run the tests with Firefox add `-Dbrowser=firefox` or for Chrome add `-Dbrowser=chrome`
 
 Database
 --------
 
-Theo mặc định, testsuite sử dụng cơ sở dữ liệu h2 được nhúng để thử nghiệm với các cơ sở dữ liệu khác  (Database Testing)[tests-db.md].
+By default the testsuite uses an embedded H2 database to test with other databases see (Database Testing)[tests-db.md].
 
 Test utils
 ==========
 
-Tất cả utils có thể được thực hiện từ thư mục testsuite / utils: 
+All the utils can be executed from the directory testsuite/utils:
 
     cd testsuite/utils
 
 Keycloak server
 ---------------
 
-Để bắt đầu một máy chủ Keycloak cơ bản để thử nghiệm: 
+To start a basic Keycloak server for testing run:
 
     mvn exec:java -Pkeycloak-server
     
-or run org.keycloak.testsuite.KeycloakServer Từ IDE yêu thích của bạn !
+or run org.keycloak.testsuite.KeycloakServer from your favourite IDE!
      
-Khi bắt đầu máy chủ, nó cũng có thể nhập một realm từ tệp json: 
+When starting the server it can also import a realm from a json file:
 
     mvn exec:java -Pkeycloak-server -Dimport=testrealm.json
     
-Khi bắt đầu máy chủ, giao thông https có thể được thiết lập bởi cài đặt keystore chứa chứng chỉ máy chủ và https port, tùy chọn cài đặt truststore. 
+When starting the server, https transport can be set up by setting keystore containing the server certificate
+and https port, optionally setting the truststore.
 
     mvn exec:java -Pkeycloak-server \
         -Djavax.net.ssl.trustStore=/path/to/truststore.jks \
@@ -43,69 +44,69 @@ Khi bắt đầu máy chủ, giao thông https có thể được thiết lập 
 
 ### Default admin account
 
-Quản trị viên mặc định trong master realm được tạo bằng thông tin đăng nhập: 
+The default admin within the master realm are created with credentials:
 * Username: `admin`
 * Password: `admin`
 
-Máy chủ bài kiểm tra keycloak sẽ tự động tạo người dùng vương quốc mới khi các điều kiện sau được đáp ứng 
-* Thuộc tính `keycloak.createAdminUser` đặt thành `true` (Mặc định là " true " nếu không hiện diện)
-* Không có người dùng hiện tại trong the master realm
+The Keycloak test suite server will automatically create the new master realm user when the following conditions are met
+* Property `keycloak.createAdminUser` is set to `true` (defaults to `true` if not present)
+* There is no existing user within the master realm
 
 ### Live edit of html and styles
 
-Máy chủ thử nghiệm Keycloak có thể tải các tài nguyên trực tiếp từ hệ tập tin thay vì classpath. Điều này cho phép chỉnh sửa html, kiểu và cập nhật hình ảnh mà không khởi động lại máy chủ. Để sử dụng các tài nguyên từ hệ tập tin bắt đầu bằng: 
+The Keycloak test server can load resources directly from the filesystem instead of the classpath. This allows editing html, styles and updating images without restarting the server. To make the server use resources from the filesystem start with:
 
     mvn exec:java -Pkeycloak-server -Dresources
     
-Bạn cũng có thể chỉ định thư mục chủ đề được sử dụng bởi máy chủ: 
+You can also specify the theme directory used by the server with:
 
     mvn exec:java -Pkeycloak-server -Dkeycloak.theme.dir=<PATH TO THEMES DIR>
     
-Sử dụng các chủ đề ví dụ chạy máy chủ bằng: 
+For example to use the example themes run the server with:
 
     mvn exec:java -Pkeycloak-server -Dkeycloak.theme.dir=examples/themes
     
-**Chú ý:** Nếu `keycloak.theme.dir` Chỉ định các chủ đề mặc định (base, rcue và keycloak) được tải từ classpath 
+**NOTE:** If `keycloak.theme.dir` is specified the default themes (base, rcue and keycloak) are loaded from the classpath
 
 TOTP codes
 ----------
 
-Để tạo mã totp mà không có google authenticator:
+To generate totp codes without Google authenticator run:
 
     mvn exec:java -Ptotp
     
-hoặc run org.keycloak.testsuite.TotpGenerator từ IDE yêu thích của bạn!
+or run org.keycloak.testsuite.TotpGenerator from your favourite IDE!
 
-Khi bắt đầu copy/paste bí mật totp và nhấn enter. Để sử dụng bí mật mới chỉ copy/paste và nhấn lại enter. 
+Once started copy/paste the totp secret and press enter. To use a new secret just copy/paste and press enter again.
 
 Mail server
 -----------
 
-Để bắt đầu một máy chủ thư thử nghiệm cho việc kiểm tra gửi email:
+To start a test mail server for testing email sending run:
 
     mvn exec:java -Pmail-server
     
 or run org.keycloak.testsuite.MailServer from your favourite IDE!
 
-Để định cấu hình keycloak để sử dụng các thuộc tính hệ thống sau: 
+To configure Keycloak to use the above server add the following system properties:
 
     keycloak.mail.smtp.from=auto@keycloak.org
     keycloak.mail.smtp.host=localhost
     keycloak.mail.smtp.port=3025
     
-Ví dụ: nếu sử dụng máy chủ thử nghiệm utils keycloak bắt đầu bằng: 
+For example if using the test utils Keycloak server start it with:
 
     mvn exec:java -Pkeycloak-server -Dkeycloak.mail.smtp.from=auto@keycloak.org -Dkeycloak.mail.smtp.host=localhost -Dkeycloak.mail.smtp.port=3025
     
 LDAP server
 -----------
 
-Để bắt đầu một máy chủ ldap dựa trên việc kiểm tra ldap:
+To start a ApacheDS based LDAP server for testing LDAP sending run:
     
     mvn exec:java -Pldap
     
-Có các thuộc tính hệ thống khác bạn có thể sử dụng để định cấu hình lớp (see ldapembeddedserver cho details). Sau khi xong, bạn có thể tạo ra nhà cung cấp liên bang ldap 
-Trong bảng điều khiển dành cho quản trị viên Keycloak với cài đặt như: 
+There are additional system properties you can use to configure (See LDAPEmbeddedServer class for details). Once done, you can create LDAP Federation provider
+in Keycloak admin console with the settings like:
 * Vendor: Other
 * Connection URL: ldap://localhost:10389
 * User DN Suffix: ou=People,dc=keycloak,dc=org
@@ -115,91 +116,92 @@ Trong bảng điều khiển dành cho quản trị viên Keycloak với cài đ
 Kerberos server
 ---------------
 
-Để bắt đầu ApacheDS dựa trên Kerberos server để thử nghiệm Kerberos + LDAP, chạy câu lệnh:
+To start a ApacheDS based Kerberos server for testing Kerberos + LDAP sending run:
     
     mvn exec:java -Pkerberos
     
-Có các thuộc tính hệ thống khác mà bạn có thể sử dụng để định cấu hình (see ldapembeddedserver và kerberosembeddedserver cho các mục đích details) nhưng các giá trị thử nghiệm phải tốt. 
-Theo mặc định máy chủ ldap sẽ chạy trên localhost: 10389 và kerberos trên localhost: 6088. 
+There are additional system properties you can use to configure (See LDAPEmbeddedServer and KerberosEmbeddedServer class for details) but for testing purposes default values should be good.
+By default ApacheDS LDAP server will be running on localhost:10389 and Kerberos KDC on localhost:6088 .
 
-Cách thay thế là bắt đầu Kerberos với một vương quốc thay thế  KC2.COM thay vì mặc định KEYCLOAK.ORG.
-Sau đó máy chủ ApacheDS sẽ được khởi động bằng tất cả các cổng dịch chuyển bằng 1000 (EG. LDAP on 11389, Kerberos KDC on 7088). 
-Điều này cho phép bắt đầu 2 máy chủ kerberos song song với việc kiểm tra những thứ như kerberos 
+The alternative is to start Kerberos with the alternative realm KC2.COM instead of default KEYCLOAK.ORG. 
+The ApacheDS server will be then started with all ports shifted by 1000 (EG. LDAP on 11389, Kerberos KDC on 7088).
+This allows to start 2 kerberos servers in parallel to test things like Kerberos cross-realm trust:
 
     mvn exec:java -Pkerberos -Dkeycloak.kerberos.realm=KC2.COM
  
 
-Một khi kerberos đang chạy, bạn có thể tạo ra nhà cung cấp liên bang LDAP trong bảng điều khiển quản trị Keycloak với các cài đặt như đã đề cập trong mục LDAP trước. 
-Nhưng ngoài ra, bạn có thể cho phép Kerberos xác thực trong nhà cung cấp LDAP với cài đặt như: 
+Once kerberos is running, you can create LDAP Federation provider in Keycloak admin console with same settings like mentioned in previous LDAP section. 
+But additionally you can enable Kerberos authentication in LDAP provider with the settings like:
 
 * Kerberos realm: KEYCLOAK.ORG
 * Server Principal: HTTP/localhost@KEYCLOAK.ORG
 * KeyTab: $KEYCLOAK_SOURCES/testsuite/integration-arquillian/tests/base/src/test/resources/kerberos/http.keytab (Replace $KEYCLOAK_SOURCES with correct absolute path of your sources)
 
-Khi bạn làm điều này, bạn cũng nên đảm bảo rằng tập tin cấu hình client Kerberos được cấu hình đúng với miền KEYCLOAK.ORG  
-Hãy xem [../testsuite/integration-arquillian/tests/base/src/test/resources/kerberos/test-krb5.conf](../testsuite/integration-arquillian/tests/base/src/test/resources/kerberos/test-krb5.conf) .Vị trí của tập tin cấu hình kerberos 
-Là nền tảng phụ thuộc  (In linux it's file `/etc/krb5.conf` )
+Once you do this, you should also ensure that your Kerberos client configuration file is properly configured with KEYCLOAK.ORG domain. 
+See [../testsuite/integration-arquillian/tests/base/src/test/resources/kerberos/test-krb5.conf](../testsuite/integration-arquillian/tests/base/src/test/resources/kerberos/test-krb5.conf) for inspiration. The location of Kerberos configuration file 
+is platform dependent (In linux it's file `/etc/krb5.conf` )
 
-Sau đó, bạn cần định cấu hình trình duyệt của mình để cho phép SPNEGO/Kerberos đăng nhập từ  `localhost` .
+Then you need to configure your browser to allow SPNEGO/Kerberos login from `localhost` .
 
-Các bước chính xác lại là một trình duyệt phụ thuộc vào trình duyệt.Xem ví dụ firefox [http://www.microhowto.info/howto/configure_firefox_to_authenticate_using_spnego_and_kerberos.html](http://www.microhowto.info/howto/configure_firefox_to_authenticate_using_spnego_and_kerberos.html) . 
-URI `localhost` nên được cho phép trong `network.negotiate-auth.trusted-uris` lựa chọn cấu hình. 
+Exact steps are again browser dependent. For Firefox see for example [http://www.microhowto.info/howto/configure_firefox_to_authenticate_using_spnego_and_kerberos.html](http://www.microhowto.info/howto/configure_firefox_to_authenticate_using_spnego_and_kerberos.html) . 
+URI `localhost` must be allowed in `network.negotiate-auth.trusted-uris` config option. 
 
-Đối với Chrome, bạn chỉ cần chạy trình duyệt bằng lệnh tương tự như các chi tiết về (nhiều mô tả trong Chrome tài liệu): 
+For Chrome, you just need to run the browser with command similar to this (more details in Chrome documentation):
 
 ```
 /usr/bin/google-chrome-stable --auth-server-whitelist="localhost"
 ```
 
 
-Cuối cùng thử nghiệm tích hợp bằng cách truy xuất tấm vé kerberos. Trong nhiều hệ điều hành, bạn có thể đạt được điều này bằng cách chạy lệnh từ CMD như: 
+Finally test the integration by retrieve kerberos ticket. In many OS you can achieve this by running command from CMD like:
                                           
 ```
 kinit hnelson@KEYCLOAK.ORG
 ```
                         
-và cung cấp password `secret`
+and provide password `secret`
 
-bây giờ khi bạn truy cập `http://localhost:8081/auth/realms/master/account` Bạn nên tự động đăng nhập như người dùng `hnelson` .
+Now when you access `http://localhost:8081/auth/realms/master/account` you should be logged in automatically as user `hnelson` .
 
 Simple loadbalancer
 -------------------
 
-Bạn có thể chạy class `SimpleUndertowLoadBalancer` từ IDE. Theo mặc định, nó thực thi những con sóng được nhúng để chạy trên  `http://localhost:8180`, Giao tiếp với 2 nút keycloak đang chạy trên `http://localhost:8181` và `http://localhost:8182` . Xem javadoc để biết thêm chi tiết. 
+You can run class `SimpleUndertowLoadBalancer` from IDE. By default, it executes the embedded undertow loadbalancer running on `http://localhost:8180`, which communicates with 2 backend Keycloak nodes 
+running on `http://localhost:8181` and `http://localhost:8182` . See javadoc for more details.
  
 
-Tạo nhiều người dùng hoặc phiên ngoại tuyến 
+Create many users or offline sessions
 -------------------------------------
-Chạy testsuite với lệnh như thế này: 
+Run testsuite with the command like this:
 
 ```
 mvn exec:java -Pkeycloak-server -DstartTestsuiteCLI
 ```
 
-Ngoài ra, nếu bạn muốn sử dụng cơ sở dữ liệu mysql của mình, hãy làm như các giá trị thuộc tính(thay thế giá trị thuộc tính theo kết nối db của bạn ):
+Alternatively if you want to use your MySQL database use the command like this (replace properties values according your DB connection):
 
 ```
 mvn exec:java -Pkeycloak-server -Dkeycloak.connectionsJpa.url=jdbc:mysql://localhost/keycloak -Dkeycloak.connectionsJpa.driver=com.mysql.jdbc.Driver -Dkeycloak.connectionsJpa.user=keycloak -Dkeycloak.connectionsJpa.password=keycloak -DstartTestsuiteCLI
 ```
 
-Sau đó một khi CLI bắt đầu, bạn có thể sử dụng lệnh 'help' để xem tất cả các lệnh có sẵn. 
+Then once CLI is started, you can use command `help` to see all the available commands. 
 
 ### Creating many users
 
-Để tạo nhiều người dùng bạn có thể sử dụng lệnh `createUsers` 
-Ví dụ: điều này sẽ tạo ra 500 người dùng  `test0, test1, test2, ... , test499` trong realm `demo` Và mỗi 100 người dùng trong giao dịch riêng. Tất cả người dùng sẽ được cấp vai trò của realm  `user` và `admin` :
+For create many users you can use command `createUsers` 
+For example this will create 500 users `test0, test1, test2, ... , test499` in realm `demo` and each 100 users in separate transaction. All users will be granted realm roles `user` and `admin` :
 
 ```
 createUsers test test demo 0 500 100 user,admin
 ```
 
-Kiểm tra số người dùng: 
+Check count of users:
 
 ```
 getUsersCount demo
 ```
 
-Kiểm tra xem liệu người dùng cụ thể có thực sự được tạo ra: 
+Check if concrete user was really created:
 
 ```
 getUser demo test499
@@ -207,19 +209,19 @@ getUser demo test499
 
 ### Creating many offline sessions
 
-Để tạo nhiều phiên ngoại tuyến bạn có thể sử dụng lệnh  `persistSessions` . Ví dụ tạo số phiên 50000 (mỗi 500 trong số các transaction riêng biệt) với lệnh: 
+For create many offline sessions you can use command `persistSessions` . For example create 50000 sessions (each 500 in separate transaction) with command:
 
 ```
 persistSessions 50000 500
 ```
 
-Sau khi người dùng hoặc phiên được tạo, bạn có thể khởi động lại để đảm bảo nhập các phiên ngoại tuyến sẽ được kích hoạt và bạn có thể thấy tác động đến thời gian khởi động. Sau khi khởi động lại bạn có thể sử dụng lệnh: 
+Once users or sessions are created, you can restart to ensure the startup import of offline sessions will be triggered and you can see impact on startup time. After restart you can use command:
 
 ```
 size
 ```
 
-Đối với tổng số phiên trong infinispan (Nó sẽ là 2 lần khi có 1 phiên khách hàng cho mỗi phiên người dùng được tạo)
+to doublecheck total count of sessions in infinispan (it will be 2 times as there is also 1 client session per each user session created)
 
 
 
